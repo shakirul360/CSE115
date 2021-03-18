@@ -23,7 +23,8 @@ int main(){
     /*
     * Calculate and display the difference of two input values
     */
-
+    printf("Enter three integers first, second and third> ");
+    scanf("%d %d %d", &first, &second, &third);
     return 0;
 
 
