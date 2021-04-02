@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
-
+void angle_measures(int init_degree, int step_degree, int final_degree);
 int main(){
     int n, i, j;
-
+    /* declare variables and pass them to the function from here */
     printf("Please enter three numbers: ");
     scanf("%d %d %d", &n, &i, &j);
     printf(" %d %d %d\n", n, i, j);
@@ -23,7 +23,7 @@ void angle_measures(int init_degree, int step_degree, int final_degree){
         rad = i * rad_deg;
         sinx = sin(rad);
         cosx = cos(rad);
-        printf("|     %d       |      %.3f        |     %.3f  |\n", i, sinx, cosx);
+        printf("|     %-5d    |      %5.3f        |     %5.3f  |\n", i, sinx, cosx);
         printf("|***********************************************|\n");
 
     }

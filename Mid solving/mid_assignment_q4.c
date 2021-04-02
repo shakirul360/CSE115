@@ -6,6 +6,7 @@ int main(){
     scanf("%d", &num_count);
 
     for (i = 0; i < num_count; i++){
+        printf("Enter a number: ");
         scanf("%d", &num);
         if (num % 2 == 0){
             even_count++;
