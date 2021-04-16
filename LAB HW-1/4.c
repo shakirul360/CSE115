@@ -1,3 +1,8 @@
+/* LAB HW - 1,
+   done by Shakirul Islam Leeon
+   student ID: 2111728642
+*/
+
 #include <stdio.h>
 
 void printPattern(int n);
