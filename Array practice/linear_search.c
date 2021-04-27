@@ -15,7 +15,7 @@ int main(){
 void value_check(int arr[], int value){
     int i, flag = 0;
 
-    for (i = 0; i < 10; i++){
+    for (i = 0; i < 5; i++){
 
         if (arr[i] == value){
             flag = 1;

@@ -11,7 +11,7 @@ int main(){
 
 
 
-    for (i = 55; i <= 99; i++){
+    for (i = 49; i <= 100; i++){
         letter_grade(i, &grade, &just_missed);
         printf("points = %d   grade = %c     just missed = %d\n", i, grade, just_missed);
     }
@@ -20,18 +20,18 @@ int main(){
 }
 
 void letter_grade(int points, char *gradep, int *just_missedp){
-    if (points >= 90)
+    if ((points >= 90) && (points <= 100))
         *gradep = 'A';
-    else if (points >= 80)
+    else if ((points >= 80) && (points <= 89))
         *gradep = 'B';
-    else if (points >= 70)
+    else if ((points >= 70) && (points <= 79))
         *gradep = 'C';
-    else if (points >= 60)
+    else if ((points >= 60) && (points <= 69))
         *gradep = 'D';
     else
         *gradep = 'F';
 
-    if ((points + 1) % 10 == 0)
+    if ((points + 1) % 10 == 0 && points != 99)
         *just_missedp = 1;
     else
         *just_missedp = 0;

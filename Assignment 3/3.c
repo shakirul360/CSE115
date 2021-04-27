@@ -7,7 +7,7 @@ int main(){
 
     x = 7; y = 2;
 
-    printf(" x y z\n\n");
+    printf("%4c%4c%4c\n",'x', 'y', 'z');
 
     sum(x, y, &z);
     printf("%4d%4d%4d\n", x, y, z);

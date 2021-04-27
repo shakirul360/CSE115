@@ -23,5 +23,6 @@ int main(){
 
     printf("itemp = %c", *itemp);
     return 0;
+
 }
 
