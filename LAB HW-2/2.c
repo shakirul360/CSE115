@@ -17,8 +17,8 @@ int main(){
     printf("Enter matrix's elements: \n");
     input_array(rowSize, colSize, mat);
     printf("The matrix: \n");
-    transpose(rowSize, colSize, mat, trans_mat);
     print_2d_array(rowSize, colSize, mat);
+    transpose(rowSize, colSize, mat, trans_mat);
     printf("\n");
     printf("The transposed matrix: \n");
     print_2d_array(colSize, rowSize, trans_mat);

@@ -22,7 +22,7 @@ void findEvenOddNumber(int size, int originalArr[], int evenArr[], int oddArr[])
             evenArr[even_count] = originalArr[i];
             even_count++;
         } else {
-            oddArr[even_count] = originalArr[i];
+            oddArr[odd_count] = originalArr[i];
             odd_count++;
         }
     }
