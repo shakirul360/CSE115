@@ -8,7 +8,8 @@
 
 void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data_count);
 int signup(char users[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data_count, FILE *usernames, FILE *passes);
-
+void thought_print(char filename[]);
+void create_thought(char filename[]);
 int main(){
     FILE *usernames, *passes;
     char user_list[DATA_SIZE][USERNAME_SIZE];
@@ -28,7 +29,7 @@ int main(){
 //        printf("%d ", pass[i]);
 //    }
     /* loading data code complete */
-     printf("%40c", ' ');
+    printf("%40c", ' ');
     printf("Welcome to thoughtbook!%20c\n", ' ');
     printf("%30c___________________________________________\n", ' ');
     printf("%30c|1)    Login     | 2)      Sign up        |\n", ' ');
@@ -45,14 +46,17 @@ int main(){
             login(user_list, pass_list, &data_count);
        }
     }
+
+
+
     fclose(usernames);
     fclose(passes);
     return 0;
 }
 
 void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int *data_count){
-    char user[USERNAME_SIZE]; /* stores username */
-    int pass, i, log_flag = 0;
+    char user[USERNAME_SIZE], filename[USERNAME_SIZE+4];/* stores username */
+    int pass, i, log_flag = 0, read_create_select;
     printf("%30c", ' ');
     printf("Enter username: ");
     scanf("%s", user);
@@ -72,12 +76,22 @@ void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int *data_
     if (log_flag == 0){
         printf("Wrong username or password!");
     } else if (log_flag == 1){
-        printf("Successfully logged in!\n");
+        printf("Successfully logged in!\n\n");
+        printf("%30cWould you  like to (1)read your thoughts or (2)create them? ", ' ');
+        scanf("%d", &read_create_select);
+        strcpy(filename, user);
+        strcat(filename, ".txt");
+        if (read_create_select == 1){
+            thought_print(filename);
+
+        } else if (read_create_select == 2){
+            create_thought(filename);
+        }
     }
 }
 
 int signup(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data_count, FILE *usernames, FILE *passes){
-    char user[USERNAME_SIZE];
+    char user[USERNAME_SIZE], filename[USERNAME_SIZE+4];
     int pass, i;
 
     printf("%30cCreate an account!\n", ' ');
@@ -105,8 +119,48 @@ int signup(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data
     *data_count += 1;
 
 
+    strcpy(filename, user);
+    strcat(filename, ".txt");
+    FILE *new_user_file = fopen(filename, "w");
+
     return 1;
 
 }
 
+void thought_print(char filename[]){
+    char line[200];
+    FILE *thoughtlist = fopen(filename, "r");
+    if(thoughtlist == NULL){
+      printf("Error!");
+      exit(1);
+    }
+    printf("%30cYour thoughts till now: \n", ' ');
+    printf("%30c_______________________\n", ' ');
+    char *status = fgets(line, 200, thoughtlist);
+    while (status != NULL){
+        printf("%30c", ' ');
+        puts(line);
+        status = fgets(line, 200, thoughtlist);
+    }
+}
 
+void create_thought(char filename[]){
+    int query;
+    char line[200];
+    FILE *thoughtlist = fopen(filename, "a");
+    gets(line);
+    printf("%30cWhat's on your mind?\n%30c",' ', ' ');
+    gets(line);
+    fprintf(thoughtlist,"%s\n", line);
+    printf("%30cYour thought has been successfully entered!\n", ' ');
+
+    fclose(thoughtlist);
+
+    printf("%30cWould you like to read your thoughts?\n%30c", ' ', ' ');
+    scanf("%d", &query);
+    if (query == 1)
+        thought_print(filename);
+    else
+        printf("%30cThank you for using ThoughtBook!", ' ');
+
+}
