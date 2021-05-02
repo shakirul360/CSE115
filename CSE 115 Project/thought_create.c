@@ -10,6 +10,7 @@ void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data
 int signup(char users[DATA_SIZE][USERNAME_SIZE], int pass_list[], int  *data_count, FILE *usernames, FILE *passes);
 void thought_print(char filename[]);
 void create_thought(char filename[]);
+
 int main(){
     FILE *usernames, *passes;
     char user_list[DATA_SIZE][USERNAME_SIZE];
@@ -17,6 +18,10 @@ int main(){
     /* Load username and passwords from files */
     usernames = fopen("usernames.txt", "a+");
     passes = fopen("passwords.txt", "a+");
+    if(usernames == NULL || passes == NULL){
+        printf("Can't load database!\n");
+        return 1;
+    }
 
     while ((fscanf(usernames, "%s", &user_list[i])) == 1){
         fscanf(passes, "%d", &pass_list[i]);
@@ -57,6 +62,8 @@ int main(){
 void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int *data_count){
     char user[USERNAME_SIZE], filename[USERNAME_SIZE+4];/* stores username */
     int pass, i, log_flag = 0, read_create_select;
+    printf("%48c Login\n", ' ');
+    printf("%30c___________________________________________\n", ' ');
     printf("%30c", ' ');
     printf("Enter username: ");
     scanf("%s", user);
@@ -79,6 +86,7 @@ void login(char user_list[DATA_SIZE][USERNAME_SIZE], int pass_list[], int *data_
         printf("Successfully logged in!\n\n");
         printf("%30cWould you  like to (1)read your thoughts or (2)create them? ", ' ');
         scanf("%d", &read_create_select);
+        printf("%30c___________________________________________\n", ' ');
         strcpy(filename, user);
         strcat(filename, ".txt");
         if (read_create_select == 1){
@@ -140,6 +148,7 @@ void thought_print(char filename[]){
     while (status != NULL){
         printf("%30c", ' ');
         puts(line);
+        printf("%30c___________________________________________\n", ' ');
         status = fgets(line, 200, thoughtlist);
     }
 }
@@ -148,11 +157,18 @@ void create_thought(char filename[]){
     int query;
     char line[200];
     FILE *thoughtlist = fopen(filename, "a");
+    if(thoughtlist == NULL){
+        printf("Can't load Thought File!\n");
+        return;
+    }
     gets(line);
-    printf("%30cWhat's on your mind?\n%30c",' ', ' ');
+    printf("%30cWhat's on your mind?\n",' ');
+    printf("%30c___________________________________________\n%30c", ' ', ' ');
     gets(line);
+
     fprintf(thoughtlist,"%s\n", line);
     printf("%30cYour thought has been successfully entered!\n", ' ');
+    printf("%30c___________________________________________\n", ' ');
 
     fclose(thoughtlist);
 

@@ -25,8 +25,9 @@ int charCounter(char* pString, char c){
     char* pTemp = pString;
 
     while(pTemp != NULL){
-    printf("%c\n", *(pTemp - 2));
-    printf("%s\n\n", pTemp);
+    printf("%c\n", *(pTemp));
+    printf("%s\n", pTemp);
+    printf("________\n");
     pTemp = strchr(pTemp, c);
     if( pTemp ) {
         pTemp++;

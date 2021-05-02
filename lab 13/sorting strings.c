@@ -26,7 +26,6 @@ int main(void){
         strcpy(str2, str3);
         strcpy(str3, temp);
     }
-
     printf("%s %s %s", str1, str2, str3);
 
 }
