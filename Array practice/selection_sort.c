@@ -1,52 +1,59 @@
 #include <stdio.h>
-
-int get_min_index(int arr[], int first, int last);
-int select_sort(int arr[], int size);
-void print_array(int arr[],int size);
-
-int main(){
-
-    int arr[] = {22, 92, 7, 85, 8, 71, 10, 54, 14, 36, 21, 4}, size;
-    size = sizeof(arr) / sizeof(int);
-    printf("Printing array: \n");
-    print_array(arr, size);
-
-    select_sort(arr, size);
-    printf("Printing array: \n");
-    print_array(arr, size);
-    return 0;
-}
-
-
-int select_sort(int arr[], int size){
-    int index_of_min, i, temp;
-
-    for (i = 0; i < size - 1; i++){
-        index_of_min = get_min_index(arr, i, size - 1);
-
-        if (i != index_of_min){
-            temp = arr[index_of_min];
-            arr[index_of_min] = arr[i];
-            arr[i] = temp;
+void messi(int num);
+int main()
+{
+    int a[3][3],b[3][3],c[3][3],row,col;
+    printf("enter the first matrix:");
+    for (row=0;row<3;row++)
+        {
+             for (col=0;col<3;col++)
+             {
+                  scanf("%d",&a[row][col]);
+             }
         }
-    }
-}
+       printf("enter second matrix:");
+        for (row=0;row<3;row++)
+        {
+            for (col=0;col<3;col++)
+            {
+                scanf("%d",&b[row][col]);
+            }
 
+        }
 
-int get_min_index(int arr[], int first, int last){
+  printf(" the first matrix is:");
+    for (row=0;row<3;row++)
+        {
+             for (col=0;col<3;col++)
+             {
+                  printf("%d\t", a[row][col]);
+             }
+             printf(" \n ");
+        }
+ printf("enter second matrix:");
+        for (row=0;row<3;row++)
+        {
+            for (col=0;col<3;col++)
+            {
+                printf("%d\t",b[row][col]);
+            }
+         printf(" \n ");
+        }
 
-    int i;
-    int index_min = first;
-    for(i = first; i <= last; i++){
-        if (arr[i] < arr[index_min])
-            index_min = i;
-    }
-    return index_min;
-}
+        for (row=0;row<3;row++)
+        {
+             for (col=0;col<3;col++)
+              {
+                  c[row][col]=a[row][col]+b[row][col];
+              }
 
-void print_array(int arr[], int size){
-    int i;
-    for (i = 0; i < size; i++){
-        printf("arr[%d] = %d\n", i, arr[i]);
-    }
-}
+             }
+    printf("the sum matrix is:");
+            for (row=0;row<3;row++)
+        {
+            for (col=0;col<3;col++)
+            {
+                printf("%d\t",c[row][col]);
+            }
+         printf(" \n ");
+    }}
