@@ -8,7 +8,7 @@
 
 void findEvenOddNumber(int size, int originalArr[], int evenArr[], int oddArr[]);
 int main(){
-    int originalArr[SIZE] = {1,2,3,4,5,6,7,8,9,10, 11, 12};
+    int originalArr[SIZE] = {0,2,3,4,5,6,7,8,9,10, 11, 12};
     int evenArr[SIZE], oddArr[SIZE];
 
     findEvenOddNumber(SIZE, originalArr, evenArr, oddArr);

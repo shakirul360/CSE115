@@ -6,14 +6,14 @@
 #include <string.h>
 
 int main(){
-    char string[100] = "It is good to program in PYTHON, language PYTHON. PYTHON";
+    char string[100] = "It is good to program in PYTHON language";
     char rep_word[100] = "PYTHON";
     char rep[100] = "C";
     char replaced[100] = "", *ptr;
     int i, j;
 
 
-    ptr = strtok(string, " . ,");
+    ptr = strtok(string, " ");
 
 	while(ptr != NULL){
 
@@ -26,7 +26,7 @@ int main(){
             strcat(replaced, " ");
 	    }
 
-		ptr = strtok(NULL, " . ,");
+		ptr = strtok(NULL, " ");
 	}
 	printf("%s", replaced);
 
