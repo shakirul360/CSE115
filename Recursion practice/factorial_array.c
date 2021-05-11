@@ -28,7 +28,10 @@ int factorial(int arr[], int n){
         arr[n] = 1;
         return 1;
     }else{
-        arr[n] = factorial(arr, n - 1) * n;
+        if (arr[n - 1] != 0)
+            arr[n] = arr[n - 1] * n;
+        else
+            arr[n] = factorial(arr, n - 1) * n;
     }
 
 }
