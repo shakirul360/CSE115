@@ -16,17 +16,20 @@ typedef struct{
 
 void signup(user users[], int *user_count, FILE *database);
 int load_database(user users[], FILE *database);
-int login(user users[], int user_count, FILE *database);
+void login(user users[], int user_count, FILE *database);
 void print_users(user users[], FILE *database, int user_count);
+void create_thought(char filename[]);
 
 int main(){
     FILE *database = fopen("database.txt", "a+");
 
     user users[100];
-    int user_count, log_flag, sign_flag, select;
+    int user_count, log_flag, select;
 
     /* loading the users from the database using the function, which returns the user_count */
     user_count = load_database(users, database);
+
+    //print_users(users, database, user_count);
 
      printf("%40c", ' ');
     printf("Welcome to thoughtbook!%20c\n", ' ');
@@ -37,13 +40,7 @@ int main(){
     scanf("%d", &select);
 
     if (select == 1){
-        log_flag = login(users, user_count, database);
-        if (log_flag == 0){
-            printf("Would you like to create an account?1 for yes 0 for no: ");
-            scanf("%d", &sign_flag);
-            if (sign_flag == 1)
-                signup(users, &user_count, database);
-        }
+        login(users, user_count, database);
     } else if (select == 2){
         signup(users, &user_count, database);
     }
@@ -54,10 +51,11 @@ int main(){
     return 0;
 }
 
-int login(user users[], int user_count, FILE *database){
-
-    int i, log_flag = 0;
+void login(user users[], int user_count, FILE *database){
+    char filename[100] = "./User_thoughts/";
+    int i, log_flag = 0, read_create_thought,  sign_flag;
     user temp;
+
     printf("%30cEnter your credentials to log in to ThoughtBook!\n", ' ');
     fflush(stdin);
     printf("%30cEnter your username: ", ' ');
@@ -68,15 +66,35 @@ int login(user users[], int user_count, FILE *database){
     for (i = 0; i < user_count; i++){
         if (strcmp(temp.name, users[i].name) == 0){
             if (temp.pass == users[i].pass){
-                printf("%30cSuccessfully logged in!", ' ');
+                printf("%30cSuccessfully logged in!\n", ' ');
                 log_flag = 1;
                 break;
             }
         }
     }
-    if (log_flag == 0)
+
+    if (log_flag == 1){
+        printf("%30cWould you like to create thoughts or read them? 1 for Create 2 for Read: ", ' ');
+        scanf("%d", &read_create_thought);
+        strcat(filename, temp.name);
+        strcat(filename, ".txt");
+        if (read_create_thought == 1){
+            create_thought(filename);
+        } else if (read_create_thought == 2){
+            thought_print(filename);
+        }
+    }
+
+    if (log_flag == 0){
         printf("%30cWrong username or password!\n", ' ');
-    return log_flag;
+        printf("%30cWould you like to create an account?1 for yes 0 for no: ", ' ');
+            scanf("%d", &sign_flag);
+            if (sign_flag == 1)
+                signup(users, &user_count, database);
+    }
+
+
+
 
 }
 
@@ -108,6 +126,7 @@ void signup(user users[], int *user_count, FILE *database){
     fopen(filename,"w");
 
     *user_count = *user_count + 1;
+    login(users, user_count, database);
 
 
 }
@@ -134,4 +153,52 @@ void print_users(user users[], FILE *database, int user_count){
         printf("%s %d\n", users[i].name, users[i].pass);
     }
 
+}
+
+
+void create_thought(char filename[]){
+    int query;
+    char line[200];
+    FILE *thoughtlist = fopen(filename, "a");
+    if(thoughtlist == NULL){
+        printf("Can't load Thought File!\n");
+        return;
+    }
+    fflush(stdin);
+    printf("%30cWhat's on your mind?\n",' ');
+    printf("%30c___________________________________________\n%30c", ' ', ' ');
+    gets(line);
+
+    fprintf(thoughtlist,"%s\n", line);
+    printf("%30cYour thought has been successfully entered!\n", ' ');
+    printf("%30c___________________________________________\n", ' ');
+
+    fclose(thoughtlist);
+
+    printf("%30cWould you like to read your thoughts?\n%30c", ' ', ' ');
+    scanf("%d", &query);
+    if (query == 1)
+        thought_print(filename);
+    else
+        printf("%30cThank you for using ThoughtBook!", ' ');
+
+}
+
+
+void thought_print(char filename[]){
+    char line[200];
+    FILE *thoughtlist = fopen(filename, "r");
+    if(thoughtlist == NULL){
+      printf("Error!");
+      exit(1);
+    }
+    printf("%30cYour thoughts till now: \n", ' ');
+    printf("%30c_______________________\n", ' ');
+    char *status = fgets(line, 200, thoughtlist);
+    while (status != NULL){
+        printf("%30c", ' ');
+        puts(line);
+        printf("%30c___________________________________________\n", ' ');
+        status = fgets(line, 200, thoughtlist);
+    }
 }
