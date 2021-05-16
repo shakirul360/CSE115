@@ -17,7 +17,7 @@ typedef struct{
 void signup(user users[], int *user_count, FILE *database);
 int load_database(user users[], FILE *database);
 void login(user users[], int user_count, FILE *database);
-void print_users(user users[], FILE *database, int user_count);
+void print_users(user users[], int user_count);
 void create_thought(char filename[]);
 
 int main(){
@@ -143,7 +143,7 @@ int load_database(user users[], FILE *database){
 
 }
 
-void print_users(user users[], FILE *database, int user_count){
+void print_users(user users[], int user_count){
     int i;
     char username[USERNAME_SIZE];
     int pass;
@@ -182,6 +182,8 @@ void create_thought(char filename[]){
     else
         printf("%30cThank you for using ThoughtBook!", ' ');
 
+    fclose(filename);
+
 }
 
 
@@ -201,4 +203,5 @@ void thought_print(char filename[]){
         printf("%30c___________________________________________\n", ' ');
         status = fgets(line, 200, thoughtlist);
     }
+    fclose(thoughtlist);
 }
