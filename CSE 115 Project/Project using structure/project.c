@@ -1,5 +1,7 @@
 /* Done by Shakirul Islam leeon
     student ID - 2111728642
+    CSE 115.7, Instructor - FMA, MLE
+    Final Project using structures, array and files.
 */
 
 #include <stdio.h>
@@ -14,11 +16,12 @@ typedef struct{
 
 } user;
 
-void signup(user users[], int *user_count, FILE *database);
-int load_database(user users[], FILE *database);
-void login(user users[], int user_count, FILE *database);
-void print_users(user users[], int user_count);
-void create_thought(char filename[]);
+void signup(user users[], int *user_count, FILE *database); /* Creates an account and a personal Thought file for the user */
+int load_database(user users[], FILE *database);            /* loads up the username and passwords of the users to a structure array and returns the user count */
+void login(user users[], int user_count, FILE *database);   /* uses the inputted username and password to match with array's data to log the user in */
+void print_users(user users[], int user_count);             /* prints the users and their information using the structure array, user. Only for admin purposes */
+void create_thought(char filename[]);                       /* Creates thoughts of the logged in users and saves it to their personal Thought File */
+void thought_print(char filename[]);                        /* prints the thoughts of the logged in user by reading the personal thought file */
 
 int main(){
     FILE *database = fopen("database.txt", "a+");
@@ -74,7 +77,7 @@ void login(user users[], int user_count, FILE *database){
     }
 
     if (log_flag == 1){
-        printf("%30cWould you like to create thoughts or read them? 1 for Create 2 for Read: ", ' ');
+        printf("%30cWould you like to create thoughts or read them?\n%30c1 for Create 2 for Read: ", ' ', ' ');
         scanf("%d", &read_create_thought);
         strcat(filename, temp.name);
         strcat(filename, ".txt");
@@ -175,7 +178,7 @@ void create_thought(char filename[]){
 
     fclose(thoughtlist);
 
-    printf("%30cWould you like to read your thoughts?\n%30c", ' ', ' ');
+    printf("%30cWould you like to read your thoughts?\n%30c1 for yes: ", ' ', ' ');
     scanf("%d", &query);
     if (query == 1)
         thought_print(filename);
