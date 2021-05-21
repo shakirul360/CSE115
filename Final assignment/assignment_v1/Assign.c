@@ -13,7 +13,7 @@ typedef struct{
     char name[NAME_SIZE];
     int age;
     int patient_status;
-    int risky;
+    int risky; /* automatically set, given the patient_status value */
 
 } patient;
 
@@ -29,9 +29,9 @@ int main(){
 
     printf("Enter the file name: ");
     gets(filename);
-//    input_patient (1, filename, patients);
-//output_patient_data(6, filename, patients);
-    sort_patients(6, filename, patients);
+    input_patient (5, filename, patients);
+    output_patient_data(5, filename, patients);
+    sort_patients(5, filename, patients);
     return 0;
 }
 
@@ -97,7 +97,7 @@ void output_patient_data(int patient_number, char filename[], patient patients[]
         ptr = strtok(NULL, ",");
         patients[i].risky = atoi(ptr);
 
-    }
+    } fclose(patient_data);
 
     printf("%10s%5c%3s%5c%6s%5c%4s\n", "Name", ' ', "Age", ' ', "Status", ' ', "Risky");
     for (i = 0; i < patient_number; i++){
@@ -170,7 +170,7 @@ void sort_patients(int patient_number, char filename[], patient patients[]){
     for (i = 0; i < patient_number; i++){
         printf("%10s%5c%3d%5c%4d%7c%3d\n", patients[i].name, ' ', patients[i].age,' ', patients[i].patient_status, ' ', patients[i].risky);
         }
-
+    fclose(patient_data);
 
 }
 

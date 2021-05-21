@@ -16,8 +16,8 @@ typedef struct{
 
 } user;
 
-void signup(user users[], int *user_count, FILE *database); /* Creates an account and a personal Thought file for the user */
-int load_database(user users[], FILE *database);            /* loads up the username and passwords of the users to a structure array and returns the user count */
+void signup(user users[], int *user_count, FILE *database); /* Creates an account and a personal Thought file for the user inside User_thoughts folder */
+int load_database(user users[], FILE *database);            /* loads up the username and passwords of the users from the database.txt file to a structure array and returns the user count */
 void login(user users[], int user_count, FILE *database);   /* uses the inputted username and password to match with array's data to log the user in */
 void print_users(user users[], int user_count);             /* prints the users and their information using the structure array, user. Only for admin purposes */
 void create_thought(char filename[]);                       /* Creates thoughts of the logged in users and saves it to their personal Thought File */
@@ -32,7 +32,7 @@ int main(){
     /* loading the users from the database using the function, which returns the user_count */
     user_count = load_database(users, database);
 
-    //print_users(users, database, user_count);
+    print_users(users, user_count);
 
      printf("%40c", ' ');
     printf("Welcome to thoughtbook!%20c\n", ' ');
@@ -55,7 +55,7 @@ int main(){
 }
 
 void login(user users[], int user_count, FILE *database){
-    char filename[100] = "./User_thoughts/";
+    char filename[100];
     int i, log_flag = 0, read_create_thought,  sign_flag;
     user temp;
 
@@ -79,16 +79,17 @@ void login(user users[], int user_count, FILE *database){
     if (log_flag == 1){
         printf("%30cWould you like to create thoughts or read them?\n%30c1 for Create 2 for Read: ", ' ', ' ');
         scanf("%d", &read_create_thought);
-        strcat(filename, temp.name);
+        strcpy(filename, temp.name);
         strcat(filename, ".txt");
         if (read_create_thought == 1){
+            printf("here2\n");
             create_thought(filename);
         } else if (read_create_thought == 2){
             thought_print(filename);
         }
     }
 
-    if (log_flag == 0){
+    else if (log_flag == 0){
         printf("%30cWrong username or password!\n", ' ');
         printf("%30cWould you like to create an account?1 for yes 0 for no: ", ' ');
             scanf("%d", &sign_flag);
@@ -103,7 +104,7 @@ void login(user users[], int user_count, FILE *database){
 
 void signup(user users[], int *user_count, FILE *database){
 
-    char filename[100] = "./User_thoughts/";
+    char filename[100];
 
     printf("%30cPlease enter your desired username: ", ' ');
     fflush(stdin);
@@ -124,8 +125,9 @@ void signup(user users[], int *user_count, FILE *database){
     fprintf(database,"\n%d", users[*user_count].pass);
 
     /* Creating the file string to open the user's personal thoughts file */
-    strcat(filename, users[*user_count].name);
+    strcpy(filename, users[*user_count].name);
     strcat(filename, ".txt");
+    printf("%s\n", filename);
     fopen(filename,"w");
 
     *user_count = *user_count + 1;
@@ -207,4 +209,5 @@ void thought_print(char filename[]){
         status = fgets(line, 200, thoughtlist);
     }
     fclose(thoughtlist);
+    printf("hmm\n");
 }

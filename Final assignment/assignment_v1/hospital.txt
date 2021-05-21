@@ -1,0 +1,5 @@
+iniesta, 36, 5, 0
+xavi, 36, 7, 1
+messi, 33, 3, 0
+fabregas, 35, 9, 1
+puyol, 37, 8, 1
