@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include<conio.h>
 
 typedef struct {
 
@@ -20,7 +21,7 @@ typedef struct {
 } SmartPhoneType;
 
 void input_mobile(int size, SmartPhoneType mobileList[], char filename[]);
-void load_info(int size, SmartPhoneType mobileList[], char filename[]);
+void load_info(int size, SmartPhoneType mobileList[], char filename[]);   /* used as a helper function to debug, as inputting the same data multiple time is a hassle */
 void printPhoneInfo(SmartPhoneType phoneType);
 void getHighestPricePhone(SmartPhoneType mobileList[], int size, SmartPhoneType *highestPricePhone);
 void countryWisePhone( SmartPhoneType mobileList[], int size, char *country);
@@ -28,25 +29,37 @@ void deletePhone(SmartPhoneType mobileList[], int size, int phoneID);
 
 
 int main(){
-    int size = 4;
+    int size = 5;
     char filename[] = "mobileInfo.txt";
     SmartPhoneType mobileList[size];
     SmartPhoneType highestPricePhone;
 
-    //input_mobile(size, mobileList, filename);
-    load_info(size, mobileList, filename);
+    /* Question 1 */
+    input_mobile(size, mobileList, filename);
 
-//    for (int i = 0; i < size; i++){
-//        printPhoneInfo(mobileList[i]);
-//        printf("\n");
-//    }
 
-//    getHighestPricePhone(mobileList, size, &highestPricePhone);
-//    printf("Data of Highest Priced phone: \n");
-//    printPhoneInfo(highestPricePhone);
+    //load_info(size, mobileList, filename); /* used as a helper function to debug, as inputting the same data multiple time is a hassle */
 
-    //countryWisePhone(mobileList, size, "America\n");
+    /* Question 2 */
+    printf("\n-------Printing all the structured phone data on array: --------\n\n");
+    for (int i = 0; i < size; i++){
+        printPhoneInfo(mobileList[i]);
+        printf("\n");
+    }
 
+    /* Question 3 */
+    getHighestPricePhone(mobileList, size, &highestPricePhone);
+    printf("--------Data of Highest Priced phone: --------\n");
+    printPhoneInfo(highestPricePhone);
+
+    /* Question 4 */
+
+    printf("---------Search by Country----------\n\n");
+    countryWisePhone(mobileList, size, "America");
+    printf("\n");
+
+    /* Question 5 */
+    printf("-------Deleting the ID number passed: -------\n");
     deletePhone(mobileList, size, 1);
 
     return 0;
@@ -95,6 +108,7 @@ void input_mobile(int size, SmartPhoneType mobileList[], char filename[]){
                    mobileList[i].userPhoneNo, mobileList[i].userCountry);
         printf("\n");
     }
+    fclose(mobile_data);
 
 }
 
@@ -171,9 +185,9 @@ void countryWisePhone(SmartPhoneType mobileList[], int size, char *country){
     int i;
 
     for (i = 0; i < size; i++){
-        //printf("%s%s", mobileList[i].userCountry, country);
         if (strcmp(mobileList[i].userCountry, country) == 0){
             printPhoneInfo(mobileList[i]);
+            printf("\n");
         }
     }
 
@@ -182,7 +196,7 @@ void countryWisePhone(SmartPhoneType mobileList[], int size, char *country){
 
 void deletePhone(SmartPhoneType mobileList[], int size, int phoneID){
     int i, j, found_flag = 0;
-    FILE *mobile_data = fopen("mobileInfo.txt", "w");
+    FILE *mobile_data = fopen("mobileInfo.txt", "w"); /* Reopening the file to ensure the mobile data is removed even from the file if found */
 
     for (i = 0; i < size; i++){
         if (mobileList[i].phoneID == phoneID){
@@ -190,17 +204,20 @@ void deletePhone(SmartPhoneType mobileList[], int size, int phoneID){
             for (j = i; j < size; j++){
                 mobileList[j] = mobileList[j + 1];
             }
+            size = size - 1;
+            break;
         }
     }
-
-    for (i = 0; i < size - 1; i++){
-        fprintf(mobile_data, "%d,%s,%d,%d,%.2f,%d,%s,%d,%s",
+    for (i = 0; i < size; i++){
+        fprintf(mobile_data, "%d,%s,%d,%d,%.2f,%d,%s,%d,%s\n",
                  mobileList[i].phoneID, mobileList[i].phoneName, mobileList[i].price, mobileList[i].ramMemory,
                   mobileList[i].cpuSpeed, mobileList[i].gpuMemory, mobileList[i].userName,
                    mobileList[i].userPhoneNo, mobileList[i].userCountry);
     }
     if (found_flag == 1)
         printf("Sucessfully deleted!\n");
+    else
+        printf("No match for ID.\n");
     fclose(mobile_data);
 
 }

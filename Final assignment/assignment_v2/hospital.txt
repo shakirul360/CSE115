@@ -1,0 +1,7 @@
+1,messi,33,1,5
+2,xavi,66,1,9
+3,iniesta,60,0,7
+4,puyol,55,0,3
+5,valdes,50,0,3
+6,villa,37,1,5
+7,pedro,67,0,7
