@@ -155,6 +155,7 @@ void load_info(int size, SmartPhoneType mobileList[], char filename[]){
 
 
     }
+    fclose(mobile_data);
 }
 
 void printPhoneInfo(SmartPhoneType phoneType){
